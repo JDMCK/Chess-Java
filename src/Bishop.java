@@ -1,9 +1,12 @@
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
     public Bishop (boolean isWhite) {
-        super(isWhite, "Bishop");
+        super(isWhite, "bishop", 3);
     }
     @Override
     public char getUnicode() {
@@ -21,11 +24,11 @@ public class Bishop extends Piece {
             int distance = 1;
             while (true) {
                 Move move = new Move(directions[i][0] * distance + rank, directions[i][1] * distance + file);
-                if (validator.validate(move) == MoveStatus.VALID_STOP) {
+                if (validator.validate(isWhite(), move) == MoveStatus.VALID_STOP) {
                     moves.add(move);
                     break;
                 }
-                if (validator.validate(move) == MoveStatus.INVALID) {
+                if (validator.validate(isWhite(), move) == MoveStatus.INVALID) {
                     break;
                 }
                 moves.add(move);

@@ -1,3 +1,4 @@
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 
@@ -5,10 +6,17 @@ public abstract class Piece extends ImageView {
 
     private final boolean isWhite;
     private final String name;
+    private final ImageView graphic;
+    private int materialScore;
 
-    public Piece(boolean isWhite, String name) {
+    public Piece(boolean isWhite, String name, int materialScore) {
         this.isWhite = isWhite;
         this.name = name;
+        this.materialScore = materialScore;
+        Image image = new Image("images/pieces/" + (isWhite ? "white" : "black") + "-" + name + ".png");
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        this.graphic = imageView;
     }
 
     /**
@@ -24,6 +32,14 @@ public abstract class Piece extends ImageView {
     public abstract char getUnicode();
 
     /**
+     * Returns the pieces display graphic.
+     * @return graphic as Image
+     */
+    public ImageView getGraphic() {
+        return graphic;
+    }
+
+    /**
      * Gets if piece is white.
      * @return true if white, false if black
      */
@@ -33,10 +49,18 @@ public abstract class Piece extends ImageView {
 
     /**
      * Gets name of piece.
-     * @retun name of piece
+     * @return name of piece
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets material score of piece.
+     * @return material score as int
+     */
+    public int getMaterialScore() {
+        return materialScore;
     }
 
     /**

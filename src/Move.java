@@ -6,4 +6,8 @@ public class Move {
         this.file = file;
         this.rank = rank;
     }
+
+    public boolean equals(Move move) {
+        return move.rank == rank && move.file == file;
+    }
 }

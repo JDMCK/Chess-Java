@@ -1,20 +1,16 @@
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Tile extends StackPane {
 
-    private Piece piece;
+    private Piece piece = null;
     final private boolean isLight;
-    /**
-     * Constructor for an occupied tile.
-     * @param isLight the tile is light or dark
-     * @param piece is the piece you want to set
-     */
-    public Tile(boolean isLight, Piece piece, double tileSize) {
-        this.piece = piece;
-        this.isLight = isLight;
-
-        setPrefSize(tileSize, tileSize);
-    }
+    final private double tileSize;
+    final private Rectangle highlight;
+    final private Rectangle background;
+    private boolean isHighlighted;
 
     /**
      * Constructor for an empty tile.
@@ -22,8 +18,24 @@ public class Tile extends StackPane {
      */
     public Tile(boolean isLight, double tileSize) {
         this.isLight = isLight;
+        this.tileSize = tileSize;
+        isHighlighted = false;
 
-        setPrefSize(tileSize, tileSize);
+        Rectangle background = new Rectangle();
+        background.setWidth(tileSize);
+        background.setHeight(tileSize);
+        background.setFill(isLight ? Color.rgb(238,238,210) : Color.rgb(118,150,86));
+        this.background = background;
+
+        Rectangle highlight = new Rectangle();
+        highlight.setWidth(tileSize);
+        highlight.setHeight(tileSize);
+        highlight.setFill(Color.rgb	(186,202,68));
+        highlight.setOpacity(0.75);
+        highlight.setVisible(isHighlighted);
+        this.highlight = highlight;
+
+        getChildren().addAll(background, highlight);
     }
 
     /**
@@ -39,9 +51,18 @@ public class Tile extends StackPane {
      * @param piece to set
      */
     public void setPiece(Piece piece) {
+        if (piece == null) {
+            getChildren().remove(this.piece.getGraphic());
+        } else {
+            if (this.piece != null) {
+                getChildren().remove(this.piece.getGraphic());
+            }
+            ImageView pieceGraphic = piece.getGraphic();
+            pieceGraphic.setPreserveRatio(true);
+            pieceGraphic.setFitHeight(tileSize);
+            getChildren().add(pieceGraphic);
+        }
         this.piece = piece;
-
-        getChildren().add(piece);
     }
 
     /**
@@ -50,5 +71,13 @@ public class Tile extends StackPane {
      */
     public boolean isLight() {
         return isLight;
+    }
+
+    /**
+     * Toggles this tiles highlight.
+     */
+    public void toggleHighlight() {
+        isHighlighted = !isHighlighted;
+        highlight.setVisible(isHighlighted);
     }
 }

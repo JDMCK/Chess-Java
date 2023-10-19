@@ -5,5 +5,5 @@ public interface BoardMoveValidator {
      * @param move is move to check
      * @return Validity status of given move
      */
-    public MoveStatus validate(Move move);
+    MoveStatus validate(boolean isWhite, Move move);
 }
